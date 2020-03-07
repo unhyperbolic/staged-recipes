@@ -1,0 +1,57 @@
+From 8d251487b82f7b601a39dca71bae4b06e7c35400 Mon Sep 17 00:00:00 2001
+From: Matthias Goerner <1239022+unhyperbolic@users.noreply.github.com>
+Date: Fri, 6 Mar 2020 21:33:49 -0800
+Subject: [PATCH] Removing installation of mime types into XDG_MIME_INSTALL_DIR
+ since it does not work under conda.
+
+---
+ CMakeLists.txt          | 12 +++---------
+ qtui/src/CMakeLists.txt |  9 ++++++---
+ 2 files changed, 9 insertions(+), 12 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 8b2515c..9d45a00 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -585,15 +585,9 @@ ELSE(DISABLE_GUI)
+     "http://graphviz.org/"
+     REGINA_MANDATORY)
+ 
+-  if (${REGINA_INSTALL_TYPE} STREQUAL XDG)
+-    set(SHARED_MIME_INFO_MINIMUM_VERSION "0.30")
+-    find_package(SharedMimeInfo)
+-    MACRO_LOG_FEATURE(SHARED_MIME_INFO_FOUND
+-      "SharedMimeInfo"
+-      "Required for Regina's graphical user interface"
+-      "http://freedesktop.org/wiki/Software/shared-mime-info"
+-      TRUE "0.30")
+-  endif (${REGINA_INSTALL_TYPE} STREQUAL XDG)
++  # Conda patch
++  #
++  # Finding SharedMimeInfo fails in the conda environment.
+ 
+   if (${REGINA_INSTALL_TYPE} STREQUAL Bundle)
+     include(BundleUtilities)
+diff --git a/qtui/src/CMakeLists.txt b/qtui/src/CMakeLists.txt
+index a5312b7..0f49b98 100644
+--- a/qtui/src/CMakeLists.txt
++++ b/qtui/src/CMakeLists.txt
+@@ -192,9 +192,12 @@ if (${REGINA_INSTALL_TYPE} STREQUAL XDG)
+   # Install desktop files and mimetype handling.
+   install(FILES regina.desktop DESTINATION ${XDG_APPS_INSTALL_DIR}
+     COMPONENT Runtime)
+-  install(FILES regina.xml DESTINATION ${XDG_MIME_INSTALL_DIR}
+-    COMPONENT Runtime)
+-  update_xdg_mimetypes(${XDG_MIME_INSTALL_DIR})
++    
++  # Conda patch
++  #
++  # Not installing XDG_MIME_INSTALL_DIR since finding
++  # that one fails.
++
+ endif (${REGINA_INSTALL_TYPE} STREQUAL XDG)
+ 
+ if (WIN32)
+-- 
+2.2.1
+

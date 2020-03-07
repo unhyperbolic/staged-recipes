@@ -1,0 +1,50 @@
+# Recipe to build regina conda package
+# 
+# Build package with
+#
+#     conda build .
+#
+# (add --debug to see more info)
+# Test the build package with
+#
+#     conda install --use-local regina
+#
+
+package:
+    name: regina
+    version: service
+source:
+    git_url: https://github.com/regina-normal/regina
+    git_rev: fix-compile-qtui-no-python
+    patches:
+        - 0000-remove-mime-type-install.patch
+
+requirements:
+    build:
+        - python =3.8
+        - boost >=1.65
+        - cmake >=3.15
+        - graphviz >=2.40
+        - jansson >=2.11
+        - libxml2 >=2.9
+        - gmp >=6.2.0
+        - tokyocabinet >=1.4.48
+        - qt >=5.12.5
+        - pyside2 >=5.13.2
+        - popt >=1.16
+        - cppunit >=1.8.0
+        - doxygen >=1.8
+        - pkgconfig >=1.3
+    run:
+        - python =3.8
+        - boost >=1.65
+        - graphviz >=2.40
+        - jansson >=2.11
+        - libxml2 >=2.9
+        - gmp >=6.2.0
+        - tokyocabinet >=1.4.48
+        - qt >=5.12.5
+        - pyside2 >=5.13.2
+        - popt >=1.16
+        - cppunit >=1.8.0
+        - pkgconfig >=1.3
