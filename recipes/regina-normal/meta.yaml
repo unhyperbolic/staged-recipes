@@ -31,6 +31,7 @@ requirements:
         - {{ compiler('c') }}
         - {{ compiler('cxx') }} # recommended over clang =9.0.1 and libcxx >=9.0.1
         - {{ cdt('mesa-libgl-devel') }}  # [linux]
+        - libcxx
         - boost >=1.65
         - cmake >=3.15
         - graphviz >=2.40
@@ -63,3 +64,4 @@ requirements:
         - bzip2 >=1.0.8
         - libiconv
         - zlib >=1.2.11
+        - libcxx
