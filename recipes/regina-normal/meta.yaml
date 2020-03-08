@@ -9,6 +9,11 @@
 #
 #     conda install --use-local regina
 #
+# Also see:
+# https://conda-forge.org/docs/maintainer/adding_pkgs.html#the-recipe-meta-yaml
+# https://conda-forge.org/docs/maintainer/knowledge_base.html#compilers
+# https://conda-forge.org/docs/maintainer/knowledge_base.html#libgl
+# 
 
 package:
     name: regina-normal
