@@ -12,7 +12,7 @@
 
 package:
     name: regina
-    version: service
+    version: 6.0
 source:
     git_url: https://github.com/regina-normal/regina
     git_rev: fix-compile-qtui-no-python
