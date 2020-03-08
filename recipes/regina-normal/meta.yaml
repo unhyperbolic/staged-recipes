@@ -23,8 +23,9 @@ source:
 requirements:
     build:
         - python =3.8
-        - clang =9.0.1
-        - libcxx >=9.0.1
+        - {{ compiler('c') }}
+        - {{ compiler('cxx') }} # recommended over clang =9.0.1 and libcxx >=9.0.1
+        - {{ cdt('mesa-libgl-devel') }}  # [linux]
         - boost >=1.65
         - cmake >=3.15
         - graphviz >=2.40
@@ -54,7 +55,6 @@ requirements:
         - popt >=1.16
         - cppunit >=1.8.0
         - pkgconfig >=1.3
-        - libcxx >=9.0.1
         - bzip2 >=1.0.8
         - libiconv
         - zlib >=1.2.11
