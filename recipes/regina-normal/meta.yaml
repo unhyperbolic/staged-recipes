@@ -18,6 +18,7 @@ source:
     git_rev: fix-compile-qtui-no-python
     patches:
         - 0000-remove-mime-type-install.patch
+        - 0001-find-tokyocabinet.patch
 
 requirements:
     build:

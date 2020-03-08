@@ -1,0 +1,59 @@
+From 469e05956954f756fd49d3ae24ff65dffac884ac Mon Sep 17 00:00:00 2001
+From: Matthias Goerner <1239022+unhyperbolic@users.noreply.github.com>
+Date: Sat, 7 Mar 2020 18:04:36 -0800
+Subject: [PATCH] Adding FindTokyocabinet instead of relying on pig-config.
+
+---
+ CMakeLists.txt                       |  3 ++-
+ cmake/modules/FindTokyocabinet.cmake | 25 +++++++++++++++++++++++++
+ 2 files changed, 27 insertions(+), 1 deletion(-)
+ create mode 100644 cmake/modules/FindTokyocabinet.cmake
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 9d45a00..308f561 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -380,7 +380,8 @@ IF (QDBM)
+   SET (QDBM_AS_TOKYOCABINET TRUE)
+   SET (DB_EXT "qdb")
+ ELSE (QDBM)
+-  PKG_CHECK_MODULES(TOKYOCABINET tokyocabinet)
++  FIND_PACKAGE(TOKYOCABINET)
++  INCLUDE_DIRECTORIES(${TOKYOCABINET_INCLUDE_DIR})
+   MACRO_LOG_FEATURE(TOKYOCABINET_FOUND
+     "Tokyo Cabinet"
+     "Essential: lightweight database library for census data"
+diff --git a/cmake/modules/FindTokyocabinet.cmake b/cmake/modules/FindTokyocabinet.cmake
+new file mode 100644
+index 0000000..c456743
+--- /dev/null
++++ b/cmake/modules/FindTokyocabinet.cmake
+@@ -0,0 +1,25 @@
++# Taken from the KDE4 cmake modules directory. - Ben Burton, 22 August 2011.
++
++# Try to find the TOKYOCABINET librairies
++#  TOKYOCABINET_FOUND - system has TOKYOCABINET lib
++#  TOKYOCABINET_INCLUDE_DIR - the TOKYOCABINET include directory
++#  TOKYOCABINET_LIBRARIES - Libraries needed to use TOKYOCABINET
++
++# Copyright (c) 2006, Laurent Montel, <montel@kde.org>
++#
++# Redistribution and use is allowed according to the terms of the BSD license.
++# For details see the accompanying COPYING-CMAKE-SCRIPTS file.
++
++
++if (TOKYOCABINET_INCLUDE_DIR AND TOKYOCABINET_LIBRARIES)
++  # Already in cache, be silent
++  set(TOKYOCABINET_FIND_QUIETLY TRUE)
++endif (TOKYOCABINET_INCLUDE_DIR AND TOKYOCABINET_LIBRARIES)
++
++find_path(TOKYOCABINET_INCLUDE_DIR NAMES tcbdb.h )
++find_library(TOKYOCABINET_LIBRARIES NAMES tokyocabinet libtokyocabinet)
++
++include(FindPackageHandleStandardArgs)
++FIND_PACKAGE_HANDLE_STANDARD_ARGS(TOKYOCABINET DEFAULT_MSG TOKYOCABINET_INCLUDE_DIR TOKYOCABINET_LIBRARIES)
++
++mark_as_advanced(TOKYOCABINET_INCLUDE_DIR TOKYOCABINET_LIBRARIES)
+-- 
+2.2.1
+
